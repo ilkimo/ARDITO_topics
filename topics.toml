@@ -1,0 +1,116 @@
+
+title = "Topic map"
+
+[ARDITO]
+defaultMode = "manual"
+topic = "ADT"
+
+    [ARDITO.ARM] # __WARNING: ARM TOPICS ARE TEMPORARY AND COULD BE CHANGED__
+    mode = ["off", "velocity", "position"]
+    topic = "/ARM"
+        [ARDITO.ARM.speed]
+        # topic for realtime feedback of arm speed
+        topic = "/speed"
+
+        [ARDITO.ARM.angle]
+        # topic for realtime feedback of arm angles
+        topic = "/angle"
+
+        [ARDITO.ARM.velocity_control] # Nucleo listens on this topic
+        # topic for realtime feedback about the arm velocity mode politing status
+        #__WARNING: THIS TOPIC IS EXCLUSIVE TO THE STATE MACHINE, DO NOT WRITE HERE__
+            # use ARDITO.STATE_MACHINE.ARM.velocity_control.set instead
+        topic = "/velocity_control"
+
+            [ARDITO.ARM.velocity_control.set] # State Machine listens on this topic
+            # topic for piloting the arm in velocity mode, webapp writes here
+            topic = "/set"
+
+        [ARDITO.ARM.position_control] # Nucleo listens on this topic
+        # topic for realtime feedback about the arm position mode politing status
+        #__WARNING: THIS TOPIC IS EXCLUSIVE TO THE STATE MACHINE, DO NOT WRITE HERE__
+            # use ARDITO.STATE_MACHINE.ARM.position_control.set instead
+        topic = "/position_control"
+
+            [ARDITO.ARM.position_control.set] # State Machine listens on this topic
+            # topic for piloting the arm in position mode, webapp writes here
+            topic = "/set"
+
+    [ARDITO.MOBILITY]
+    mode = ["off", "velocity", "position", "autonomous"]
+    topic = "/MOBILITY"
+        [ARDITO.MOBILITY.speed]
+        # topic for realtime feedback of mobility speed
+        topic = "/speed"
+
+        [ARDITO.MOBILITY.angle]
+        # topic for realtime feedback of mobility angles
+        topic = "/angle"
+
+        [ARDITO.MOBILITY.velocity_control] # Nucleo publishes received commands (from ARDITO.MOBILITY.velocity_control.set) feedback
+        # topic for realtime feedback about the directives the Nucleo receives
+        topic = "/velocity_control"
+
+            [ARDITO.MOBILITY.velocity_control.set] # Nucleo listens on this topic
+            # topic for piloting the mobility in velocity mode, State Machine writes here
+            #__WARNING: THIS TOPIC IS EXCLUSIVE TO THE STATE MACHINE__
+            topic = "/set"
+
+        [ARDITO.MOBILITY.webapp_velocity_control]
+        # topic for realtime feedback of the mobility velocity mode control from webapp
+        topic = "/webapp_velocity_control"
+
+            [ARDITO.MOBILITY.webapp_velocity_control.set] # State Machine listens on this topic
+            # topic for piloting the mobility in velocity mode, webapp writes here
+            topic = "/set"
+
+        [ARDITO.MOBILITY.position_control]
+        # topic for realtime feedback of the mobility position mode control
+        topic = "/position_control"
+
+            [ARDITO.MOBILITY.position_control.set] # State Machine listens on this topic
+            # topic for piloting the mobility in position mode, webapp writes here
+            topic = "/set"
+
+            [ARDITO.MOBILITY.position_control.velocity]
+            # this topic is probably not used
+            topic = "/velocity"
+
+                [ARDITO.MOBILITY.position_control.velocity.set] # State Machine listens on this topics
+                # topics used by the position control service to pilot the rover
+                topic = "/set"
+
+        [ARDITO.MOBILITY.autonomous_control] # Nucleo listens on this topic
+        # topic for piloting the mobility in autonomous mode
+        #__WARNING: THIS TOPIC IS EXCLUSIVE TO THE STATE MACHINE__
+            # use ARDITO.MOBILITY.autonomous_control.set instead
+        topic = "/autonomous_control"
+
+            [ARDITO.MOBILITY.autonomous_control.set] # State Machine listens on this topic
+            # topic for piloting the mobility in autonomous mode, webapp writes here
+            topic = "/set"
+
+            [ARDITO.MOBILITY.autonomous_control.position]
+            # this topic is probably not used
+            topic = "/position"
+
+                [ARDITO.MOBILITY.autonomous_control.position.set]
+                # topic used by the autonomous system service to pilot the position control service
+                topic = "/set"
+
+            [ARDITO.MOBILITY.autonomous_control.velocity]
+            # this topic is probably not used
+            topic = "/velocity"
+
+                [ARDITO.MOBILITY.autonomous_control.velocity.set]
+                # topic used by the position control service to convert autonomous suggested position into velocity
+                topic = "/set"
+
+    [ARDITO.STATE_MACHINE]
+        [ARDITO.STATE_MACHINE.CONTROLLER]
+        # topic for realtime feedback of the state machine's current state
+        topic = "/controllerFS"
+
+            [ARDITO.STATE_MACHINE.CONTROLLER.set]
+            # topic for piloting the state machine, causing state transitions
+            topic = "/set"
