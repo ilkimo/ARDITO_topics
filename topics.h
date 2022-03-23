@@ -72,10 +72,7 @@ struct TOPICS {
                 },
                 .statelessTopics = {
                         {
-                                {"/whlAngRB4N"},
-                                {
-                                        {Modes::WEBAPP, "/DFA/webapp/whlAngRB4N"},
-                                }
+                                {"/whlAngRB4N"}
                         }
                 }
         };
