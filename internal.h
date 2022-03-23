@@ -24,21 +24,9 @@ enum Modes { WEBAPP = 0, UPPER_LAYER_CONTROL = 1 };
 
 /**
  * @brief
- */
-struct out_topic_sl {
-    STR_T feedback_topic;
-};
-
-/**
- *
- */
-struct in_topic_sl {
-    const Modes mode;
-    STR_T feedback_topic;
-};
-
-/**
- *
+ * - feedback_topic is the name of the topic used by the Nucleo for feedback
+ * - set_topic is the name of the topic where the Nucleo listen on (and where the
+ * DIOFA remaps the allowed input)
  */
 struct out_topic_sf {
     STR_T feedback_topic;
@@ -46,7 +34,10 @@ struct out_topic_sf {
 };
 
 /**
- *
+ * @brief input topic (stateful)
+ * - mode controller mode for this topic
+ * - feedback_topic string containing the name of the feedback topic
+ * - set_topic string containing the name of the set topic (DFA listens on this topic)
  */
 struct in_topic_sf {
     const Modes mode;
@@ -55,7 +46,8 @@ struct in_topic_sf {
 };
 
 /**
- *
+ * @brief struct representing a stateful submodule. It has a list of input topics and one
+ * output topic.
  */
 template<int T>
 struct topic_sf {
@@ -81,7 +73,6 @@ struct topic_sl {
  * @brief struct containing a list of stateful and stateless topics, where
  * statefulTopics are topics that represent a state of a system, and statelessTopics are
  * those that are not meant to be saved (like bursted commands). See CS-Docs README for further detail.
- * @params
  * N: number of stateful topics
  * M: number of stateless topics
  * T: number of input controllers (and so, topics) for the given module
@@ -91,6 +82,5 @@ struct control_topics {
     const topic_sf<T> statefulTopics[N];
     const topic_sl statelessTopics[M];
 };
-
 
 #endif //ARDITO_TOPICS_INTERNAL_H
